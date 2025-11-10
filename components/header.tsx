@@ -14,18 +14,21 @@ export function Header() {
               height={48}
               className="h-12 w-auto"
             />
-            <div className="text-2xl font-mono font-bold tracking-tight">Crypto Commons Association</div>
+            <div className="text-2xl font-mono font-bold tracking-tight">CCA</div>
           </Link>
 
           <nav className="hidden md:flex items-center gap-8">
             <Link href="/#about" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
               About
             </Link>
-            <Link href="/#commons" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              What are Crypto Commons
+            <Link href="/research" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              Research
             </Link>
             <Link href="/events" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
               Events
+            </Link>
+            <Link href="/sponsors" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              Sponsors
             </Link>
             <Link href="/#contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
               Contact
