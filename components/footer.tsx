@@ -12,14 +12,19 @@ export function Footer() {
           <div className="space-y-4">
             <h3 className="font-semibold text-lg">Contact</h3>
             <div className="space-y-2 text-sm text-primary-foreground/80">
-              <p>crypto-commons.org</p>
+              <a href="mailto:contact@crypto-commons.org" className="hover:text-primary-foreground transition-colors">
+                contact@crypto-commons.org
+              </a>
               <p className="text-primary-foreground/60">For inquiries about our work and mission</p>
             </div>
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-primary-foreground/20 text-center text-sm text-primary-foreground/60">
-          <p>&copy; {new Date().getFullYear()} Crypto Commons Association. All rights reserved.</p>
+        <div className="mt-12 pt-8 border-t border-primary-foreground/20 text-center space-y-2">
+          <p className="text-lg font-semibold">Producing #RealValue</p>
+          <p className="text-sm text-primary-foreground/60">
+            &copy; {new Date().getFullYear()} Crypto Commons Association. All rights reserved.
+          </p>
         </div>
       </div>
     </footer>
