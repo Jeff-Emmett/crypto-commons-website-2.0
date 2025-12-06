@@ -1,0 +1,16 @@
+services:
+  cca-website:
+    build: .
+    container_name: cca-website
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.cca.rule=Host(`crypto-commons.org`) || Host(`www.crypto-commons.org`)"
+      - "traefik.http.routers.cca.entrypoints=web,websecure"
+      - "traefik.http.services.cca.loadbalancer.server.port=80"
+    networks:
+      - traefik-public
+
+networks:
+  traefik-public:
+    external: true
