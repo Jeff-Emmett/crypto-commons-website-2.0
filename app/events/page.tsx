@@ -8,7 +8,7 @@ export default function EventsPage() {
   return (
     <main className="min-h-screen">
       <Header />
-      <div className="pt-20">
+      <div className="pt-32">
         <section className="container mx-auto px-6 py-20">
           <div className="max-w-4xl mx-auto">
             <div className="flex items-center gap-3 mb-4">

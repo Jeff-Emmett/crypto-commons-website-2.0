@@ -9,7 +9,7 @@ export default function MembershipPage() {
   return (
     <main className="min-h-screen">
       <Header />
-      <div className="pt-20">
+      <div className="pt-32">
         {/* Hero Section */}
         <section className="bg-muted py-20">
           <div className="container mx-auto px-4">

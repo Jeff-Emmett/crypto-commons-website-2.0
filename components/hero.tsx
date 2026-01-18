@@ -2,7 +2,7 @@ import Image from "next/image"
 
 export function Hero() {
   return (
-    <section className="pt-32 pb-20 px-6">
+    <section className="pt-44 pb-20 px-6">
       <div className="container mx-auto max-w-5xl">
         <div className="flex flex-col md:flex-row items-center gap-12 md:gap-16">
           <div className="flex-shrink-0">
