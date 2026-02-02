@@ -7,15 +7,15 @@ export function Header() {
     <header className="fixed top-0 left-0 right-0 z-50">
       <EventBanner />
       <div className="bg-background/80 backdrop-blur-sm border-b border-border">
-        <div className="container mx-auto px-6 py-4">
+        <div className="container mx-auto px-6 py-5">
           <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center gap-3">
+            <Link href="/" className="flex items-center gap-4">
               <Image
                 src="/images/cca-logo.png"
                 alt="Crypto Commons Association"
-                width={48}
-                height={48}
-                className="h-12 w-auto"
+                width={72}
+                height={72}
+                className="h-16 w-auto"
               />
               <div className="text-2xl font-mono font-bold tracking-tight">CCA</div>
             </Link>
