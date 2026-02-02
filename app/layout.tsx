@@ -1,9 +1,9 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Urbanist, JetBrains_Mono } from "next/font/google"
+import { Inter, JetBrains_Mono } from "next/font/google"
 import "./globals.css"
 
-const urbanist = Urbanist({
+const inter = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
 })
@@ -54,7 +54,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${urbanist.variable} ${jetBrainsMono.variable} font-sans antialiased`}>
+      <body className={`${inter.variable} ${jetBrainsMono.variable} font-sans antialiased`}>
         {children}
       </body>
     </html>
