@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Commons Gathering 2026 - Sponsorship Package</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --primary: #1a1a2e;
+            --secondary: #16213e;
+            --accent: #0f3460;
+            --highlight: #e94560;
+            --light: #f5f5f5;
+            --text: #333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: white;
+        }
+
+        .page {
+            max-width: 210mm;
+            margin: 0 auto;
+            padding: 20mm;
+        }
+
+        .cover {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
+            color: white;
+            text-align: center;
+            page-break-after: always;
+            padding: 40px;
+        }
+
+        .cover h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: -1px;
+        }
+
+        .cover h2 {
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cover .tagline {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: var(--highlight);
+            margin-top: 3rem;
+        }
+
+        .cover .contact {
+            margin-top: 4rem;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .cover .contact a {
+            color: white;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--highlight);
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--secondary);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            color: var(--accent);
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+
+        .highlight-box h2 {
+            color: white;
+            margin-top: 0;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-box {
+            background: var(--light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            border-left: 4px solid var(--highlight);
+        }
+
+        .stat-box .number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .stat-box .label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+
+        th, td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background: var(--primary);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background: var(--light);
+        }
+
+        .tier-card {
+            border: 2px solid var(--accent);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            page-break-inside: avoid;
+        }
+
+        .tier-card.featured {
+            border-color: var(--highlight);
+            background: linear-gradient(to bottom, rgba(233, 69, 96, 0.05), transparent);
+        }
+
+        .tier-card h3 {
+            margin-top: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .tier-card .price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--highlight);
+        }
+
+        .tier-card ul {
+            margin-left: 1.5rem;
+        }
+
+        .tier-card li {
+            margin-bottom: 0.5rem;
+        }
+
+        .partner-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .partner-item {
+            background: var(--light);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .cta-box {
+            background: var(--highlight);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .cta-box h2 {
+            color: white;
+            margin-top: 0;
+        }
+
+        .cta-box a {
+            color: white;
+            font-weight: 600;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        .page-break {
+            page-break-before: always;
+        }
+
+        .footer {
+            margin-top: 3rem;
+            padding-top: 1rem;
+            border-top: 1px solid #ddd;
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        blockquote {
+            border-left: 4px solid var(--highlight);
+            padding-left: 1.5rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+            color: #555;
+        }
+
+        @media print {
+            .page {
+                padding: 15mm;
+            }
+
+            .cover {
+                height: auto;
+                min-height: 100vh;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="cover">
+    <h1>Crypto Commons Gathering 2026</h1>
+    <h2>Sponsorship & Partnership Opportunities</h2>
+    <p class="tagline">Building the Future of Digital Commons Together</p>
+    <div class="contact">
+        <p><strong>cryptocommonsgather.ing</strong></p>
+        <p>contact@crypto-commons.org</p>
+    </div>
+</div>
+
+<div class="page">
+    <h1>Executive Summary</h1>
+
+    <p>The <strong>Crypto Commons Gathering 2026</strong> is the flagship annual event of the Crypto Commons Association (CCA), bringing together leading researchers, developers, practitioners, and visionaries at the forefront of blockchain-based commons governance.</p>
+
+    <p>This is not another crypto conference. This is where the future of regenerative digital infrastructure is being designed—where market mechanisms meet the common good, and where distributed ledger technology becomes a tool for planetary stewardship.</p>
+
+    <div class="highlight-box">
+        <h2>Your Sponsorship Supports</h2>
+        <ul>
+            <li>Groundbreaking research in crypto commons</li>
+            <li>Open-source tools for regenerative economies</li>
+            <li>A global community building digital public goods</li>
+            <li>Academic publications advancing the field</li>
+        </ul>
+    </div>
+
+    <h2>Why Crypto Commons?</h2>
+
+    <p>Crypto commons represent a paradigm shift in how we design economic systems. Unlike traditional crypto projects focused on extraction, crypto commons actively use market mechanisms and economic incentives to <strong>reward contributions to the common good</strong>.</p>
+
+    <p>This emerging interdisciplinary field combines:</p>
+    <ul>
+        <li><strong>Distributed Ledger Technology</strong> — Trustless, transparent infrastructure</li>
+        <li><strong>Commons Governance</strong> — Collective stewardship of shared resources</li>
+        <li><strong>Tokenomics</strong> — Incentive alignment for public goods</li>
+        <li><strong>Regenerative Economics</strong> — Systems that restore rather than deplete</li>
+    </ul>
+</div>
+
+<div class="page page-break">
+    <h1>Audience & Reach</h1>
+
+    <div class="stat-grid">
+        <div class="stat-box">
+            <div class="number">200+</div>
+            <div class="label">Decision-makers & Builders</div>
+        </div>
+        <div class="stat-box">
+            <div class="number">25+</div>
+            <div class="label">Countries Represented</div>
+        </div>
+        <div class="stat-box">
+            <div class="number">10+</div>
+            <div class="label">Peer-reviewed Publications</div>
+        </div>
+        <div class="stat-box">
+            <div class="number">13</div>
+            <div class="label">Partner Organizations</div>
+        </div>
+    </div>
+
+    <h2>Who Attends</h2>
+
+    <table>
+        <tr>
+            <th>Segment</th>
+            <th>Percentage</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>Developers & Technologists</td>
+            <td>30%</td>
+            <td>Protocol engineers, smart contract developers</td>
+        </tr>
+        <tr>
+            <td>Researchers & Academics</td>
+            <td>25%</td>
+            <td>PhDs, professors, research fellows</td>
+        </tr>
+        <tr>
+            <td>Practitioners & Founders</td>
+            <td>25%</td>
+            <td>Leaders of crypto commons projects, DAOs</td>
+        </tr>
+        <tr>
+            <td>Policy & Governance</td>
+            <td>10%</td>
+            <td>Legal scholars, policy advisors</td>
+        </tr>
+        <tr>
+            <td>Investors & Funders</td>
+            <td>10%</td>
+            <td>Impact investors, grant programs</td>
+        </tr>
+    </table>
+
+    <h2>Geographic Distribution</h2>
+    <ul>
+        <li><strong>Europe:</strong> 45%</li>
+        <li><strong>North America:</strong> 30%</li>
+        <li><strong>Global South / Asia Pacific:</strong> 15%</li>
+        <li><strong>Other:</strong> 10%</li>
+    </ul>
+</div>
+
+<div class="page page-break">
+    <h1>What Makes This Event Unique</h1>
+
+    <h3>1. Academic Rigor Meets Practical Implementation</h3>
+    <p>Unlike typical crypto events, the CCA Gathering bridges peer-reviewed research with working implementations. Our community has published in journals like <em>Frontiers in Blockchain</em> and simultaneously shipped production systems.</p>
+
+    <h3>2. Values-Aligned Community</h3>
+    <p>This is a curated gathering of individuals and organizations committed to:</p>
+    <ul>
+        <li>Democratic governance over plutocratic control</li>
+        <li>Regeneration over extraction</li>
+        <li>Public goods over private capture</li>
+        <li>Collective benefit over individual enrichment</li>
+    </ul>
+
+    <h3>3. Interdisciplinary Synthesis</h3>
+    <p>Crypto commons sits at the intersection of computer science, economics, political science, environmental science, and philosophy.</p>
+
+    <h3>4. Long-Term Relationship Building</h3>
+    <p>The Gathering is designed for deep connection and collaboration, not transactional networking. Many partnerships formed at previous events have resulted in joint research publications, protocol integrations, and funded initiatives.</p>
+
+    <blockquote>
+        "Crypto commons are a subset of digital commons emerging in the context of Distributed Ledger Technology. Unlike pre-DLT commons, they actively use market mechanisms and economic incentives to reward contributions to the common good, enabling scaling of commons frameworks beyond the local and immediate."
+    </blockquote>
+</div>
+
+<div class="page page-break">
+    <h1>Sponsorship Tiers</h1>
+
+    <div class="tier-card featured">
+        <h3>Steward Partner <span class="price">€25,000+</span></h3>
+        <p><em>For organizations deeply committed to the crypto commons mission</em></p>
+
+        <h4>Recognition</h4>
+        <ul>
+            <li>Premier logo placement on all event materials</li>
+            <li>Featured in event announcement press release</li>
+            <li>Dedicated sponsor profile on event website</li>
+            <li>Recognition from main stage during opening and closing</li>
+        </ul>
+
+        <h4>Engagement</h4>
+        <ul>
+            <li>Keynote speaking opportunity (20 min)</li>
+            <li>Dedicated workshop slot (90 min)</li>
+            <li>Private dinner with CCA leadership and key speakers</li>
+            <li><strong>10 complimentary event passes</strong></li>
+        </ul>
+
+        <h4>Brand Integration</h4>
+        <ul>
+            <li>Sponsored research track or theme</li>
+            <li>Named fellowship or grant program</li>
+            <li>Year-round visibility on CCA website</li>
+        </ul>
+    </div>
+
+    <div class="tier-card">
+        <h3>Commons Builder <span class="price">€15,000</span></h3>
+        <p><em>For organizations actively building in the crypto commons space</em></p>
+        <ul>
+            <li>Prominent logo on event materials and website</li>
+            <li>Panel speaking opportunity</li>
+            <li>Workshop or breakout session slot (60 min)</li>
+            <li>Invitation to speaker dinner</li>
+            <li><strong>6 complimentary event passes</strong></li>
+            <li>Sponsored coffee break or networking session</li>
+        </ul>
+    </div>
+</div>
+
+<div class="page page-break">
+    <div class="tier-card">
+        <h3>Regenerative Supporter <span class="price">€7,500</span></h3>
+        <p><em>For organizations supporting the commons ecosystem</em></p>
+        <ul>
+            <li>Logo on event website and printed materials</li>
+            <li>Listed in sponsor acknowledgments</li>
+            <li>Lightning talk opportunity (10 min)</li>
+            <li>Participation in sponsor showcase</li>
+            <li><strong>4 complimentary event passes</strong></li>
+            <li>Logo on event swag</li>
+        </ul>
+    </div>
+
+    <div class="tier-card">
+        <h3>Community Contributor <span class="price">€3,000</span></h3>
+        <p><em>For smaller organizations and projects aligned with our mission</em></p>
+        <ul>
+            <li>Logo on event website</li>
+            <li>Listed in sponsor acknowledgments</li>
+            <li><strong>2 complimentary event passes</strong></li>
+            <li>Table at project showcase</li>
+        </ul>
+    </div>
+
+    <h2>In-Kind & Alternative Contributions</h2>
+    <p>We welcome creative partnerships beyond financial sponsorship:</p>
+    <ul>
+        <li><strong>Venue sponsorship</strong> — Provide or subsidize event space</li>
+        <li><strong>Travel grants</strong> — Fund attendance for Global South participants</li>
+        <li><strong>Research grants</strong> — Support specific research initiatives</li>
+        <li><strong>Media partnerships</strong> — Amplify event through your channels</li>
+        <li><strong>Technology partnerships</strong> — Provide tools or infrastructure</li>
+    </ul>
+</div>
+
+<div class="page page-break">
+    <h1>Current Partners & Supporters</h1>
+
+    <p>The Crypto Commons Association is proud to work with organizations leading the regenerative blockchain movement:</p>
+
+    <div class="partner-grid">
+        <div class="partner-item">Bread Cooperative</div>
+        <div class="partner-item">Regen Network</div>
+        <div class="partner-item">Holochain</div>
+        <div class="partner-item">Tezos</div>
+        <div class="partner-item">Namada</div>
+        <div class="partner-item">EthicHub</div>
+        <div class="partner-item">Grassroots Economics</div>
+        <div class="partner-item">Breadchain</div>
+        <div class="partner-item">Informal Systems</div>
+        <div class="partner-item">One Project</div>
+        <div class="partner-item">Telos</div>
+        <div class="partner-item">Poetic Technologies</div>
+        <div class="partner-item">Ledgerloops</div>
+    </div>
+
+    <h2>What Your Sponsorship Supports</h2>
+
+    <h3>Open Research</h3>
+    <p>CCA funds and publishes peer-reviewed research on crypto commons, freely available to all. Recent publications include <em>"Challenges and Approaches to Scaling the Global Commons"</em> in Frontiers in Blockchain.</p>
+
+    <h3>Open-Source Development</h3>
+    <p>We support tools and frameworks for regenerative economics: token engineering methodologies, commons governance patterns, and impact measurement systems.</p>
+
+    <h3>Global Community</h3>
+    <p>Your sponsorship helps ensure accessibility through travel grants, scholarship tickets, translation services, and hybrid participation options.</p>
+
+    <h3>Knowledge Commons</h3>
+    <p>All event recordings, research, and resources are made freely available, contributing to the intellectual commons.</p>
+</div>
+
+<div class="page page-break">
+    <h1>Return on Investment</h1>
+
+    <h3>For Protocol Foundations</h3>
+    <ul>
+        <li><strong>Ecosystem positioning</strong> as a regenerative, commons-oriented project</li>
+        <li><strong>Developer mindshare</strong> among values-aligned builders</li>
+        <li><strong>Research partnerships</strong> with leading academics</li>
+        <li><strong>Governance insights</strong> from practitioners and theorists</li>
+    </ul>
+
+    <h3>For Impact Investors</h3>
+    <ul>
+        <li><strong>Deal flow</strong> with vetted, mission-aligned projects</li>
+        <li><strong>Due diligence support</strong> from technical community</li>
+        <li><strong>Portfolio company visibility</strong> among builders and researchers</li>
+        <li><strong>Thesis validation</strong> through academic research</li>
+    </ul>
+
+    <h3>For Academic Institutions</h3>
+    <ul>
+        <li><strong>Research collaboration</strong> with practitioners</li>
+        <li><strong>Student engagement</strong> with real-world applications</li>
+        <li><strong>Publication opportunities</strong> in emerging field</li>
+        <li><strong>Industry connections</strong> for applied research</li>
+    </ul>
+
+    <h3>For Cooperatives & DAOs</h3>
+    <ul>
+        <li><strong>Governance learning</strong> from diverse models</li>
+        <li><strong>Technical partnerships</strong> for implementation</li>
+        <li><strong>Community building</strong> with aligned organizations</li>
+        <li><strong>Visibility</strong> among crypto-native audiences</li>
+    </ul>
+</div>
+
+<div class="page page-break">
+    <h1>How to Proceed</h1>
+
+    <h3>1. Express Interest</h3>
+    <p>Reach out to discuss your goals and find the right partnership level.</p>
+
+    <h3>2. Alignment Conversation</h3>
+    <p>We'll schedule a call to discuss your organization's mission, specific engagement opportunities, and customization of sponsorship benefits.</p>
+
+    <h3>3. Partnership Agreement</h3>
+    <p>We'll formalize the partnership with a detailed benefit package, payment schedule, and timeline.</p>
+
+    <h3>4. Activation</h3>
+    <p>Our team will work with you on logo/brand assets, speaker coordination, promotional materials, and on-site logistics.</p>
+
+    <div class="cta-box">
+        <h2>Get Involved</h2>
+        <p><strong>Email:</strong> contact@crypto-commons.org</p>
+        <p><strong>Web:</strong> crypto-commons.org</p>
+        <p><strong>Event:</strong> cryptocommonsgather.ing</p>
+        <br>
+        <p><em>The future is commons. The future is now.</em></p>
+    </div>
+
+    <div class="footer">
+        <p><strong>Crypto Commons Association</strong></p>
+        <p>Producing #RealValue</p>
+        <p>Founded April 2021 | crypto-commons.org</p>
+    </div>
+</div>
+
+</body>
+</html>
