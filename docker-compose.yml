@@ -8,6 +8,12 @@ services:
       - "traefik.http.routers.cca.rule=Host(`crypto-commons.org`) || Host(`www.crypto-commons.org`)"
       - "traefik.http.routers.cca.entrypoints=web,websecure"
       - "traefik.http.services.cca.loadbalancer.server.port=80"
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://127.0.0.1:80/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
     networks:
       - traefik-public
 
