@@ -19,7 +19,7 @@ Deploy self-hosted Postiz instance for managing Crypto Commons social media pres
 ## Implementation Notes
 
 <!-- SECTION:NOTES:BEGIN -->
-Configured PocketID authentication via auth.jeffemmett.com
+Configured PocketID authentication via auth.ridentity.online
 
 Added Elasticsearch for Temporal workflow engine
 
