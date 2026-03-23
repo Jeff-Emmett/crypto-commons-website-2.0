@@ -26,7 +26,7 @@ interface PricingTier {
 }
 
 export const PRICING_TIERS: PricingTier[] = [
-  { label: "Early bird", price: 100, cutoff: "2026-04-01" },
+  { label: "Early bird", price: 100, cutoff: "2026-03-31" },
   { label: "Regular", price: 200, cutoff: "2026-06-01" },
   { label: "Late", price: 250, cutoff: "2099-12-31" },
 ]
