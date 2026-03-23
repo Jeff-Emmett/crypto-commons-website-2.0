@@ -8,8 +8,6 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Header } from "@/components/header"
-import { Footer } from "@/components/footer"
 import { useState } from "react"
 import {
   EVENT_SHORT,
@@ -84,9 +82,8 @@ export default function CoFi4PaymentPage() {
 
   if (step === "payment") {
     return (
-      <main className="min-h-screen">
-        <Header />
-        <div className="pt-32">
+      <main className="min-h-screen flex items-center justify-center">
+        <div className="w-full">
           <div className="container mx-auto px-4 py-12 max-w-5xl">
             <div className="text-center mb-12">
               <h1 className="text-4xl md:text-5xl font-bold mb-4">Complete Your Registration</h1>
@@ -232,15 +229,13 @@ export default function CoFi4PaymentPage() {
             </div>
           </div>
         </div>
-        <Footer />
       </main>
     )
   }
 
   return (
-    <main className="min-h-screen">
-      <Header />
-      <div className="pt-32">
+    <main className="min-h-screen flex items-center justify-center">
+      <div className="w-full">
         <div className="container mx-auto px-4 py-12 max-w-3xl">
           <div className="text-center mb-12">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">Payment for CoFi 4</h1>
@@ -300,7 +295,6 @@ export default function CoFi4PaymentPage() {
           </Card>
         </div>
       </div>
-      <Footer />
     </main>
   )
 }
