@@ -1,44 +1,42 @@
-FROM node:20-alpine AS builder
-
+# Stage 1: Install dependencies
+FROM node:20-alpine AS deps
 WORKDIR /app
-
 COPY package.json package-lock.json* ./
 RUN npm ci --legacy-peer-deps
 
+# Stage 2: Build the application
+FROM node:20-alpine AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-
 ENV NEXT_TELEMETRY_DISABLED=1
-
 RUN npm run build
 
-# Production image with nginx
-FROM nginx:alpine AS runner
+# Stage 3: Production runner (Node.js standalone)
+FROM node:20-alpine AS runner
+WORKDIR /app
 
-# Copy static export to nginx
-COPY --from=builder /app/out /usr/share/nginx/html
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
 
-# Custom nginx config for SPA routing
-RUN echo 'server { \
-    listen 80; \
-    server_name _; \
-    root /usr/share/nginx/html; \
-    index index.html; \
-    \
-    location / { \
-        try_files $uri $uri.html $uri/ /index.html; \
-    } \
-    \
-    # Cache static assets \
-    location /_next/static/ { \
-        expires 1y; \
-        add_header Cache-Control "public, immutable"; \
-    } \
-    \
-    # Security headers \
-    add_header X-Frame-Options "SAMEORIGIN" always; \
-    add_header X-Content-Type-Options "nosniff" always; \
-}' > /etc/nginx/conf.d/default.conf
+RUN addgroup --system --gid 1001 nodejs && \
+    adduser --system --uid 1001 nextjs
 
-EXPOSE 80
+# Copy standalone output
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
+COPY --from=builder /app/public ./public
 
-CMD ["nginx", "-g", "daemon off;"]
+# Infisical entrypoint
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+USER nextjs
+
+EXPOSE 3000
+
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
+
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["node", "server.js"]

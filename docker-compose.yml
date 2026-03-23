@@ -3,20 +3,38 @@ services:
     build: .
     container_name: cca-website
     restart: unless-stopped
+    environment:
+      - INFISICAL_CLIENT_ID=${INFISICAL_CLIENT_ID}
+      - INFISICAL_CLIENT_SECRET=${INFISICAL_CLIENT_SECRET}
+      - INFISICAL_PROJECT_SLUG=cofi-register
+      - NEXT_PUBLIC_BASE_URL=https://crypto-commons.org
+      - SMTP_HOST=mail.rmail.online
+      - SMTP_PORT=587
+      - SMTP_USER=cofi@rspace.online
+      - GOOGLE_SHEET_NAME=Registrations
+      - BOOKING_SHEET_NAME=Sheet1
+      - LISTMONK_DB_HOST=listmonk-db
+      - LISTMONK_DB_PORT=5432
+      - LISTMONK_DB_NAME=listmonk
+      - LISTMONK_DB_USER=listmonk
+      - LISTMONK_LIST_ID=1
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.cca.rule=Host(`crypto-commons.org`) || Host(`www.crypto-commons.org`)"
       - "traefik.http.routers.cca.entrypoints=web,websecure"
-      - "traefik.http.services.cca.loadbalancer.server.port=80"
+      - "traefik.http.services.cca.loadbalancer.server.port=3000"
     healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://127.0.0.1:80/"]
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://127.0.0.1:3000/"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 15s
     networks:
       - traefik-public
+      - listmonk_listmonk-internal
 
 networks:
   traefik-public:
+    external: true
+  listmonk_listmonk-internal:
     external: true
