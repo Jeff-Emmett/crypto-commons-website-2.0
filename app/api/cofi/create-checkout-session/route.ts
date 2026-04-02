@@ -2,6 +2,7 @@ import { type NextRequest, NextResponse } from "next/server"
 import { getMollie } from "@/lib/mollie"
 import {
   getCurrentTier,
+  getTierForPromo,
   ACCOMMODATION_MAP,
   PROCESSING_FEE_PERCENT,
   EVENT_SHORT,
@@ -20,8 +21,10 @@ export async function POST(request: NextRequest) {
 
     const registrationData = registrationDataStr ? JSON.parse(registrationDataStr) : null
 
-    // Calculate subtotal
-    const tier = getCurrentTier()
+    // Calculate subtotal — check for valid promo code override
+    const promoCode = (formData.get("promoCode") as string) || ""
+    const promoTier = promoCode ? getTierForPromo(promoCode) : null
+    const tier = promoTier ?? getCurrentTier()
     let subtotal = tier.price
     const descriptionParts = [`${EVENT_SHORT} Ticket (€${tier.price})`]
 

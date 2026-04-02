@@ -37,6 +37,18 @@ export function getCurrentTier(): PricingTier {
   return PRICING_TIERS.find((t) => now < t.cutoff) ?? PRICING_TIERS[PRICING_TIERS.length - 1]
 }
 
+// ── Promo codes (map code → tier label to grant) ────────────
+export const PROMO_CODES: Record<string, string> = {
+  "earlybird-friends": "Early bird",
+}
+
+/** Validate a promo code and return the corresponding tier, or null */
+export function getTierForPromo(code: string): PricingTier | null {
+  const tierLabel = PROMO_CODES[code]
+  if (!tierLabel) return null
+  return PRICING_TIERS.find((t) => t.label === tierLabel) ?? null
+}
+
 /** Human-readable pricing summary for display */
 export function getPricingSummary(): string {
   return PRICING_TIERS.map((t) => `€${t.price} ${t.label}`).join(" · ")
