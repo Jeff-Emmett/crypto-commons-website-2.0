@@ -32,9 +32,12 @@ services:
     networks:
       - traefik-public
       - listmonk_listmonk-internal
+      - infisical_infisical-internal
 
 networks:
   traefik-public:
     external: true
   listmonk_listmonk-internal:
+    external: true
+  infisical_infisical-internal:
     external: true
