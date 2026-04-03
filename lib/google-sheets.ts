@@ -30,6 +30,7 @@ export interface PaymentUpdateData {
   paymentDate?: string
   accommodationVenue?: string
   accommodationType?: string
+  dayPassDays?: string
 }
 
 /**
@@ -60,12 +61,13 @@ export async function addRegistration(data: RegistrationData): Promise<number> {
       "",                           // O: Accommodation Venue
       "",                           // P: Accommodation Type
       "",                           // Q: Want Food (unused)
+      "",                           // R: Day Pass Days
     ],
   ]
 
   const response = await sheets.spreadsheets.values.append({
     spreadsheetId: SPREADSHEET_ID,
-    range: `${SHEET_NAME}!A:Q`,
+    range: `${SHEET_NAME}!A:R`,
     valueInputOption: "USER_ENTERED",
     insertDataOption: "INSERT_ROWS",
     requestBody: { values },
@@ -92,7 +94,7 @@ export async function updatePaymentStatus(data: PaymentUpdateData): Promise<bool
     // First, get all rows to find the matching registration
     const response = await sheets.spreadsheets.values.get({
       spreadsheetId: SPREADSHEET_ID,
-      range: `${SHEET_NAME}!A:Q`,
+      range: `${SHEET_NAME}!A:R`,
     })
 
     const rows = response.data.values || []
@@ -119,7 +121,7 @@ export async function updatePaymentStatus(data: PaymentUpdateData): Promise<bool
 
     // Update the row with payment information
     const existingRow = rows[targetRowIndex - 1]
-    const updateRange = `${SHEET_NAME}!C${targetRowIndex}:Q${targetRowIndex}`
+    const updateRange = `${SHEET_NAME}!C${targetRowIndex}:R${targetRowIndex}`
     const updateValues = [
       [
         data.email || existingRow[2] || "",                // C: Email (from Mollie or existing)
@@ -137,6 +139,7 @@ export async function updatePaymentStatus(data: PaymentUpdateData): Promise<bool
         data.accommodationVenue || "",                     // O: Accommodation Venue
         data.accommodationType || "",                      // P: Accommodation Type
         existingRow[16] || "",                             // Q: Want Food (preserve)
+        data.dayPassDays || existingRow[17] || "",         // R: Day Pass Days
       ],
     ]
 
@@ -165,7 +168,7 @@ export async function initializeSheetHeaders(): Promise<void> {
     // Check if first row has data
     const response = await sheets.spreadsheets.values.get({
       spreadsheetId: SPREADSHEET_ID,
-      range: `${SHEET_NAME}!A1:Q1`,
+      range: `${SHEET_NAME}!A1:R1`,
     })
 
     if (!response.data.values || response.data.values.length === 0) {
@@ -189,12 +192,13 @@ export async function initializeSheetHeaders(): Promise<void> {
           "Accommodation Venue",
           "Accommodation Type",
           "Want Food",
+          "Day Pass Days",
         ],
       ]
 
       await sheets.spreadsheets.values.update({
         spreadsheetId: SPREADSHEET_ID,
-        range: `${SHEET_NAME}!A1:Q1`,
+        range: `${SHEET_NAME}!A1:R1`,
         valueInputOption: "USER_ENTERED",
         requestBody: { values: headers },
       })

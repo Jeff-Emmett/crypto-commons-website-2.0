@@ -26,10 +26,12 @@ export async function POST(request: NextRequest) {
       const customerEmail = metadata.email || payment.billingAddress?.email || ""
       const amountPaid = `€${payment.amount.value}`
       const accommodationType = metadata.accommodation || "none"
+      const isDayPass = metadata.dayPass === "true"
+      const dayPassDays = metadata.dayPassDays || ""
 
       // Attempt room booking assignment (best-effort, don't fail webhook)
       let bookingResult: { success: boolean; venue?: string; room?: string; bedType?: string } = { success: false }
-      if (accommodationType !== "none") {
+      if (accommodationType !== "none" && !isDayPass) {
         try {
           bookingResult = await assignBooking(metadata.name || "Unknown", accommodationType)
           if (bookingResult.success) {
@@ -68,6 +70,7 @@ export async function POST(request: NextRequest) {
         paymentDate: new Date().toISOString(),
         accommodationVenue: bookingResult.venue || "",
         accommodationType: accommodationType !== "none" ? accommodationType : "",
+        dayPassDays: dayPassDays || undefined,
       })
 
       if (updated) {
@@ -87,6 +90,7 @@ export async function POST(request: NextRequest) {
           dietary: metadata.dietary || "",
           accommodationVenue: bookingResult.success ? bookingResult.venue : undefined,
           accommodationRoom: bookingResult.success ? bookingResult.room : undefined,
+          dayPassDays: dayPassDays || undefined,
         })
 
         // Add to Listmonk newsletter

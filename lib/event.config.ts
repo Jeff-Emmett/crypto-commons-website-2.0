@@ -54,6 +54,26 @@ export function getPricingSummary(): string {
   return PRICING_TIERS.map((t) => `€${t.price} ${t.label}`).join(" · ")
 }
 
+// ── Day pass ─────────────────────────────────────────────────────
+
+export const DAY_PASS_PRICE = 55 // EUR per day
+
+export interface EventDay {
+  label: string
+  iso: string
+}
+
+export const EVENT_DAYS: EventDay[] = [
+  { label: "June 21 (Sat)", iso: "2026-06-21" },
+  { label: "June 22 (Sun)", iso: "2026-06-22" },
+  { label: "June 23 (Mon)", iso: "2026-06-23" },
+  { label: "June 24 (Tue)", iso: "2026-06-24" },
+  { label: "June 25 (Wed)", iso: "2026-06-25" },
+  { label: "June 26 (Thu)", iso: "2026-06-26" },
+  { label: "June 27 (Fri)", iso: "2026-06-27" },
+  { label: "June 28 (Sat)", iso: "2026-06-28" },
+]
+
 // ── Processing fee ────────────────────────────────────────────────
 
 export const PROCESSING_FEE_PERCENT = 0.02 // 2% to cover Mollie fees

@@ -117,6 +117,7 @@ interface PaymentConfirmationData {
   dietary: string
   accommodationVenue?: string
   accommodationRoom?: string
+  dayPassDays?: string
 }
 
 export async function sendPaymentConfirmation(
@@ -150,6 +151,7 @@ export async function sendPaymentConfirmation(
           </tr>
           ${data.dietary ? `<tr><td style="padding: 4px 0;"><strong>Dietary:</strong></td><td style="padding: 4px 0;">${data.dietary}</td></tr>` : ""}
           ${data.accommodationVenue ? `<tr><td style="padding: 4px 0;"><strong>Accommodation:</strong></td><td style="padding: 4px 0;">${data.accommodationVenue}${data.accommodationRoom ? `, Room ${data.accommodationRoom}` : ""}</td></tr>` : ""}
+          ${data.dayPassDays ? `<tr><td style="padding: 4px 0;"><strong>Days attending:</strong></td><td style="padding: 4px 0;">${data.dayPassDays.split(",").map((d: string) => { const dt = new Date(d + "T12:00:00Z"); return dt.toLocaleDateString("en-GB", { month: "long", day: "numeric", weekday: "short" }); }).join(", ")}</td></tr>` : ""}
         </table>
       </div>
 
