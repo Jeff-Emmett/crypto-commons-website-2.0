@@ -64,14 +64,14 @@ export interface EventDay {
 }
 
 export const EVENT_DAYS: EventDay[] = [
-  { label: "June 21 (Sat)", iso: "2026-06-21" },
-  { label: "June 22 (Sun)", iso: "2026-06-22" },
-  { label: "June 23 (Mon)", iso: "2026-06-23" },
-  { label: "June 24 (Tue)", iso: "2026-06-24" },
-  { label: "June 25 (Wed)", iso: "2026-06-25" },
-  { label: "June 26 (Thu)", iso: "2026-06-26" },
-  { label: "June 27 (Fri)", iso: "2026-06-27" },
-  { label: "June 28 (Sat)", iso: "2026-06-28" },
+  { label: "June 21 (Sun)", iso: "2026-06-21" },
+  { label: "June 22 (Mon)", iso: "2026-06-22" },
+  { label: "June 23 (Tue)", iso: "2026-06-23" },
+  { label: "June 24 (Wed)", iso: "2026-06-24" },
+  { label: "June 25 (Thu)", iso: "2026-06-25" },
+  { label: "June 26 (Fri)", iso: "2026-06-26" },
+  { label: "June 27 (Sat)", iso: "2026-06-27" },
+  { label: "June 28 (Sun)", iso: "2026-06-28" },
 ]
 
 // ── Processing fee ────────────────────────────────────────────────
