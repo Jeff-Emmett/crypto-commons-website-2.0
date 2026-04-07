@@ -121,53 +121,6 @@ export const ACCOMMODATION_VENUES: AccommodationVenue[] = [
       },
     ],
   },
-  {
-    key: "herrnhof",
-    name: "Herrnhof Villa",
-    description: "Nearby villa with a range of room options.",
-    options: [
-      {
-        id: "hh-living",
-        label: "Bed in living room",
-        price: 315,
-        nightlyRate: 45,
-        venue: "Herrnhof Villa",
-        venueKey: "herrnhof",
-      },
-      {
-        id: "hh-triple",
-        label: "Bed in triple room",
-        price: 350,
-        nightlyRate: 50,
-        venue: "Herrnhof Villa",
-        venueKey: "herrnhof",
-      },
-      {
-        id: "hh-twin",
-        label: "Single bed in double room",
-        price: 420,
-        nightlyRate: 60,
-        venue: "Herrnhof Villa",
-        venueKey: "herrnhof",
-      },
-      {
-        id: "hh-single",
-        label: "Single room",
-        price: 665,
-        nightlyRate: 95,
-        venue: "Herrnhof Villa",
-        venueKey: "herrnhof",
-      },
-      {
-        id: "hh-couple",
-        label: "Couple room",
-        price: 700,
-        nightlyRate: 100,
-        venue: "Herrnhof Villa",
-        venueKey: "herrnhof",
-      },
-    ],
-  },
 ]
 
 /** Flat map of accommodation ID → option for quick lookup */
@@ -198,26 +151,6 @@ export const BOOKING_CRITERIA: Record<string, BookingCriteria> = {
   "ch-double": {
     venue: "Commons Hub",
     bedTypes: ["double", "double (shared)"],
-  },
-  "hh-living": {
-    venue: "Herrnhof Villa",
-    bedTypes: ["daybed", "extra bed"],
-  },
-  "hh-triple": {
-    venue: "Herrnhof Villa",
-    bedTypes: ["single", "bunk up", "bunk down"],
-  },
-  "hh-twin": {
-    venue: "Herrnhof Villa",
-    bedTypes: ["single"],
-  },
-  "hh-single": {
-    venue: "Herrnhof Villa",
-    bedTypes: ["double"],
-  },
-  "hh-couple": {
-    venue: "Herrnhof Villa",
-    bedTypes: ["double"],
   },
 }
 
