@@ -29,6 +29,7 @@ export const PRICING_TIERS: PricingTier[] = [
   { label: "Early bird", price: 100, cutoff: "2026-03-31" },
   { label: "Regular", price: 200, cutoff: "2026-06-01" },
   { label: "Late", price: 250, cutoff: "2099-12-31" },
+  { label: "Sponsor", price: 0, cutoff: "2099-12-31" },
 ]
 
 /** Returns the currently active pricing tier based on today's date */
@@ -40,6 +41,7 @@ export function getCurrentTier(): PricingTier {
 // ── Promo codes (map code → tier label to grant) ────────────
 export const PROMO_CODES: Record<string, string> = {
   "earlybird-friends": "Early bird",
+  "weloveoursponsors": "Sponsor",
 }
 
 /** Validate a promo code and return the corresponding tier, or null */
@@ -49,9 +51,9 @@ export function getTierForPromo(code: string): PricingTier | null {
   return PRICING_TIERS.find((t) => t.label === tierLabel) ?? null
 }
 
-/** Human-readable pricing summary for display */
+/** Human-readable pricing summary for display (excludes €0 promo-only tiers) */
 export function getPricingSummary(): string {
-  return PRICING_TIERS.map((t) => `€${t.price} ${t.label}`).join(" · ")
+  return PRICING_TIERS.filter((t) => t.price > 0).map((t) => `€${t.price} ${t.label}`).join(" · ")
 }
 
 // ── Day pass ─────────────────────────────────────────────────────

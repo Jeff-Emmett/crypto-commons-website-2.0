@@ -9,6 +9,10 @@ import {
   DAY_PASS_PRICE,
   buildPaymentDescription,
 } from "@/lib/event.config"
+import { updatePaymentStatus } from "@/lib/google-sheets"
+import { sendPaymentConfirmation, sendBookingNotification } from "@/lib/email"
+import { addToListmonk } from "@/lib/listmonk"
+import { assignBooking } from "@/lib/booking-sheet"
 
 // Public base URL
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://crypto-commons.org"
@@ -66,6 +70,76 @@ export async function POST(request: NextRequest) {
     const processingFee = Math.round(subtotal * PROCESSING_FEE_PERCENT * 100) / 100
     const total = subtotal + processingFee
     descriptionParts.push(`Processing fee (€${processingFee.toFixed(2)})`)
+
+    // €0 path — sponsor/comp registrations skip Mollie entirely.
+    if (total === 0) {
+      const sessionId = `sponsor-${Date.now()}`
+      const amountPaid = "€0.00"
+      const accommodation = metadata.accommodation || "none"
+
+      let bookingResult: { success: boolean; venue?: string; room?: string; bedType?: string; error?: string } = { success: false }
+      if (accommodation !== "none") {
+        try {
+          bookingResult = await assignBooking(metadata.name || "Unknown", accommodation)
+        } catch (err) {
+          console.error("[Checkout €0] Booking assignment error (non-fatal):", err)
+        }
+      }
+
+      if (accommodation !== "none") {
+        sendBookingNotification({
+          guestName: metadata.name || "Unknown",
+          guestEmail: metadata.email || "",
+          accommodationType: accommodation,
+          amountPaid,
+          bookingSuccess: bookingResult.success,
+          venue: bookingResult.venue,
+          room: bookingResult.room,
+          bedType: bookingResult.bedType,
+          error: bookingResult.error,
+        }).catch((err) => console.error("[Checkout €0] Booking notification failed:", err))
+      }
+
+      await updatePaymentStatus({
+        name: metadata.name || "",
+        email: metadata.email || "",
+        paymentSessionId: sessionId,
+        paymentStatus: "Sponsor",
+        paymentMethod: "none",
+        amountPaid,
+        paymentDate: new Date().toISOString(),
+        accommodationVenue: bookingResult.venue || "",
+        accommodationType: accommodation !== "none" ? accommodation : "",
+      }).catch((err) => console.error("[Checkout €0] Sheet update failed:", err))
+
+      if (metadata.email) {
+        await sendPaymentConfirmation({
+          name: metadata.name || "",
+          email: metadata.email,
+          amountPaid,
+          paymentMethod: "sponsor",
+          contributions: metadata.contributions || "",
+          dietary: metadata.dietary || "",
+          accommodationVenue: bookingResult.success ? bookingResult.venue : undefined,
+          accommodationRoom: bookingResult.success ? bookingResult.room : undefined,
+        }).catch((err) => console.error("[Checkout €0] Confirmation email failed:", err))
+
+        addToListmonk({
+          email: metadata.email,
+          name: metadata.name || "",
+          attribs: {
+            contact: metadata.contact,
+            contributions: metadata.contributions,
+            expectations: metadata.expectations,
+          },
+        }).catch((err) => console.error("[Checkout €0] Listmonk sync failed:", err))
+      }
+
+      return new Response(null, {
+        status: 303,
+        headers: { Location: `${BASE_URL}/cofi4-payment/success` },
+      })
+    }
 
     const payment = await getMollie().payments.create({
       amount: {

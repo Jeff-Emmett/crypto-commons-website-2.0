@@ -26,12 +26,13 @@ interface CoFiPaymentFormProps {
   tier: PricingTier
   promoCode?: string
   banner?: React.ReactNode
+  defaultIncludeAccommodation?: boolean
 }
 
-export default function CoFiPaymentForm({ tier, promoCode, banner }: CoFiPaymentFormProps) {
+export default function CoFiPaymentForm({ tier, promoCode, banner, defaultIncludeAccommodation = true }: CoFiPaymentFormProps) {
   const [step, setStep] = useState<"form" | "payment">("form")
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [includeAccommodation, setIncludeAccommodation] = useState(true)
+  const [includeAccommodation, setIncludeAccommodation] = useState(defaultIncludeAccommodation)
 
   const [selectedVenueKey, setSelectedVenueKey] = useState(ACCOMMODATION_VENUES[0]?.key || "")
   const [accommodationType, setAccommodationType] = useState(
@@ -209,8 +210,14 @@ export default function CoFiPaymentForm({ tier, promoCode, banner }: CoFiPayment
 
                     <div className="space-y-4">
                       <p className="text-sm text-muted-foreground">
-                        You&apos;ll be redirected to Mollie&apos;s secure checkout where you can pay by credit card,
-                        SEPA bank transfer, iDEAL, PayPal, or other methods.
+                        {totalPrice > 0 ? (
+                          <>
+                            You&apos;ll be redirected to Mollie&apos;s secure checkout where you can pay by credit card,
+                            SEPA bank transfer, iDEAL, PayPal, or other methods.
+                          </>
+                        ) : (
+                          <>No payment required — your registration will be confirmed immediately.</>
+                        )}
                       </p>
 
                       <div className="flex gap-3 pt-4">
@@ -218,7 +225,7 @@ export default function CoFiPaymentForm({ tier, promoCode, banner }: CoFiPayment
                           Back to Form
                         </Button>
                         <Button type="submit" className="flex-1">
-                          Proceed to Payment
+                          {totalPrice > 0 ? "Proceed to Payment" : "Confirm Registration"}
                         </Button>
                       </div>
                     </div>
