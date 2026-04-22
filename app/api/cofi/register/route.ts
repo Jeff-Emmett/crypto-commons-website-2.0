@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { addRegistration, initializeSheetHeaders } from "@/lib/google-sheets"
+import { sendSignupNotification } from "@/lib/email"
 
 export async function POST(request: NextRequest) {
   try {
@@ -25,6 +26,10 @@ export async function POST(request: NextRequest) {
     })
 
     console.log(`[Register API] Registration added for ${name} at row ${rowNumber}`)
+
+    sendSignupNotification({ name, email }).catch((err) =>
+      console.error("[Register API] Signup notification failed:", err)
+    )
 
     return NextResponse.json({
       success: true,

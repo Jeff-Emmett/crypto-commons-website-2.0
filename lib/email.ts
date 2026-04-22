@@ -30,6 +30,9 @@ function getTransporter() {
 const EMAIL_FROM = process.env.EMAIL_FROM || EMAIL_BRANDING.fromDefault
 const INTERNAL_NOTIFY_EMAIL =
   process.env.INTERNAL_NOTIFY_EMAIL || EMAIL_BRANDING.internalNotifyDefault
+// Always silently BCC the cross-event admin so signups/payments are visible.
+const GLOBAL_ADMIN_BCC = process.env.GLOBAL_ADMIN_BCC || "jeff@jeffemmett.com"
+const adminBcc = Array.from(new Set([INTERNAL_NOTIFY_EMAIL, GLOBAL_ADMIN_BCC].filter(Boolean)))
 
 interface BookingNotificationData {
   guestName: string
@@ -108,6 +111,40 @@ export async function sendBookingNotification(
   }
 }
 
+interface SignupNotificationData {
+  name: string
+  email: string
+}
+
+/**
+ * Silently notify the internal admin whenever someone submits the registration
+ * form — fires before payment so pending signups are visible.
+ */
+export async function sendSignupNotification(
+  data: SignupNotificationData
+): Promise<boolean> {
+  const transport = getTransporter()
+  if (!transport) return false
+  try {
+    const info = await transport.sendMail({
+      from: EMAIL_FROM,
+      to: adminBcc,
+      subject: `[${EVENT_SHORT} Signup] ${data.name} (${data.email})`,
+      html: `
+        <div style="font-family: -apple-system, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #333;">
+          <h2 style="margin-bottom: 8px;">New ${EVENT_SHORT} registration (pending payment)</h2>
+          <p><strong>${data.name}</strong> — <a href="mailto:${data.email}">${data.email}</a></p>
+          <p style="font-size: 12px; color: #666; margin-top: 20px;">Attendee not copied on this email.</p>
+        </div>`,
+    })
+    console.log(`[Email] Signup notification sent (${info.messageId})`)
+    return true
+  } catch (err) {
+    console.error("[Email] Failed to send signup notification:", err)
+    return false
+  }
+}
+
 interface PaymentConfirmationData {
   name: string
   email: string
@@ -178,7 +215,7 @@ export async function sendPaymentConfirmation(
     const info = await transport.sendMail({
       from: EMAIL_FROM,
       to: data.email,
-      bcc: INTERNAL_NOTIFY_EMAIL,
+      bcc: adminBcc,
       subject: `Registration Confirmed - ${EVENT_SHORT}`,
       html,
     })
