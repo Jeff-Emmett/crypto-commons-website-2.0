@@ -1,6 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { getMollie } from "@/lib/mollie"
-import { updatePaymentStatus } from "@/lib/google-sheets"
+import { updatePaymentStatus, isPaymentAlreadyProcessed } from "@/lib/google-sheets"
 import { sendPaymentConfirmation, sendBookingNotification } from "@/lib/email"
 import { addToListmonk } from "@/lib/listmonk"
 import { assignBooking } from "@/lib/booking-sheet"
@@ -23,6 +23,11 @@ export async function POST(request: NextRequest) {
     console.log(`[Webhook] Payment ${paymentId} status: ${payment.status}`)
 
     if (payment.status === "paid") {
+      if (await isPaymentAlreadyProcessed(paymentId)) {
+        console.log(`[Webhook] Payment ${paymentId} already processed — skipping side effects`)
+        return NextResponse.json({ received: true })
+      }
+
       const customerEmail = metadata.email || payment.billingAddress?.email || ""
       const amountPaid = `€${payment.amount.value}`
       const accommodationType = metadata.accommodation || "none"

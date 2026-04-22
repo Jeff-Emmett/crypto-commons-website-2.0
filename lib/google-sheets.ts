@@ -34,53 +34,83 @@ export interface PaymentUpdateData {
 }
 
 /**
- * Add a new registration to the Google Sheet with "Pending" status
- * Returns the row number where the registration was added
+ * Add a new registration to the Google Sheet with "Pending" status, or
+ * update an existing Pending row matched by email. Dedups form re-submits.
  */
 export async function addRegistration(data: RegistrationData): Promise<number> {
   const sheets = getGoogleSheetsClient()
-
   const timestamp = new Date().toISOString()
+  const email = (data.email || "").toLowerCase().trim()
 
-  const values = [
-    [
-      timestamp,                    // A: Timestamp
-      data.name,                    // B: Name
-      data.email || "",             // C: Email
-      "",                           // D: Contact (unused)
-      "",                           // E: Contributions (unused)
-      "",                           // F: Expectations (unused)
-      "",                           // G: How Heard (unused)
-      "",                           // H: Dietary (unused)
-      "",                           // I: Crew Consent (unused)
-      "Pending",                    // J: Payment Status
-      "",                           // K: Payment Method
-      "",                           // L: Payment Session ID
-      "",                           // M: Amount Paid
-      "",                           // N: Payment Date
-      "",                           // O: Accommodation Venue
-      "",                           // P: Accommodation Type
-      "",                           // Q: Want Food (unused)
-      "",                           // R: Day Pass Days
-    ],
+  const row = [
+    timestamp, data.name, data.email || "",
+    "", "", "", "", "", "",
+    "Pending",
+    "", "", "", "", "", "", "", "",
   ]
+
+  if (email) {
+    const existing = await sheets.spreadsheets.values.get({
+      spreadsheetId: SPREADSHEET_ID,
+      range: `${SHEET_NAME}!A:R`,
+    })
+    const rows = existing.data.values || []
+    for (let i = rows.length - 1; i >= 1; i--) {
+      const r = rows[i]
+      const rowEmail = (r[2] || "").toLowerCase().trim()
+      const rowStatus = (r[9] || "").trim()
+      if (rowEmail === email && rowStatus === "Pending") {
+        const rowNumber = i + 1
+        await sheets.spreadsheets.values.update({
+          spreadsheetId: SPREADSHEET_ID,
+          range: `${SHEET_NAME}!A${rowNumber}:R${rowNumber}`,
+          valueInputOption: "USER_ENTERED",
+          requestBody: { values: [row] },
+        })
+        console.log(`[Google Sheets] Updated existing Pending registration for ${data.name} (${email}) at row ${rowNumber}`)
+        return rowNumber
+      }
+    }
+  }
 
   const response = await sheets.spreadsheets.values.append({
     spreadsheetId: SPREADSHEET_ID,
     range: `${SHEET_NAME}!A:R`,
     valueInputOption: "USER_ENTERED",
     insertDataOption: "INSERT_ROWS",
-    requestBody: { values },
+    requestBody: { values: [row] },
   })
 
-  // Extract row number from the updated range (e.g., "Registrations!A5:N5" -> 5)
   const updatedRange = response.data.updates?.updatedRange || ""
   const match = updatedRange.match(/!A(\d+):/)
   const rowNumber = match ? parseInt(match[1], 10) : -1
 
   console.log(`[Google Sheets] Added registration for ${data.name} at row ${rowNumber}`)
-
   return rowNumber
+}
+
+/**
+ * Check whether a payment session ID is already recorded against a Paid row —
+ * used for webhook idempotency.
+ */
+export async function isPaymentAlreadyProcessed(sessionId: string): Promise<boolean> {
+  if (!sessionId) return false
+  const sheets = getGoogleSheetsClient()
+  try {
+    const resp = await sheets.spreadsheets.values.get({
+      spreadsheetId: SPREADSHEET_ID,
+      range: `${SHEET_NAME}!J:L`,
+    })
+    const rows = resp.data.values || []
+    for (let i = 1; i < rows.length; i++) {
+      const status = (rows[i][0] || "").trim()
+      const savedId = (rows[i][2] || "").trim()
+      if (status === "Paid" && savedId && savedId.includes(sessionId)) return true
+    }
+  } catch (err) {
+    console.error("[Google Sheets] isPaymentAlreadyProcessed error:", err)
+  }
+  return false
 }
 
 /**

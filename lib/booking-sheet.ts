@@ -231,6 +231,20 @@ export async function assignBooking(
     // Parse the sheet into bed rows
     const beds = parseBookingSheet(sheetData)
 
+    // Dedup: return existing placement if this guest is already in the sheet.
+    for (const b of beds) {
+      const row = sheetData[b.rowIndex] || []
+      for (const colIdx of b.dateColumns) {
+        const cell = (row[colIdx] || "").toString().trim()
+        if (cell && cell.toLowerCase() === guestName.trim().toLowerCase()) {
+          console.log(
+            `[Booking] ${guestName} already assigned to ${b.venue} Room ${b.room} (${b.bedType}) — skipping`
+          )
+          return { success: true, venue: b.venue, room: b.room, bedType: b.bedType }
+        }
+      }
+    }
+
     // Find first available bed matching criteria
     const bed = findFirstAvailableBed(
       beds,
